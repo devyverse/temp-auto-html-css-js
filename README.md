@@ -71,6 +71,28 @@ C
 
 ---
 
+## FEATURES
+
+- Dark/Light mode : 2 themes CSS
+- JSON Config : Read file config.json &  Genere the website in function the options
+- Assets Gestion : Auto-import  img, video, icon
+- Template Multi : Choice between -->  Portfolio, Landing Page, Blog, Dashboard
+- Modules CSS system: base/ layout/ modules/ components
+- Generation complete website : Base/Layout/Modules/Components 	 
+- Routing statique : Auto-genere the link pages
+- Generation composants HTML :  Header , footer, navbar , cards , sections  (Based on Architecture B.E.M.)
+- Debug/Release Mode : DEBUG - CSS Non minifié  ==>  RELEASE  -  CSS Minifié + JS Compressé
+- Plugins Systems :  SEO , analytics, contact form... 
+- Generation sitemap.xml : SEO 
+- Generation robots.txt : Referencement 
+- Compilation Complete theme : Genere theme CSS Complet based colors palette 
+- Auto-genere palette : ( primary, secondary , accent) 
+- Auto-genere SVG : icones SVG Simple via templates
+- generation manifest.json : Transformer website in PWA
+
+
+---
+
 ## CONTRIBUTING 
 
 Thanks for contributing ! 
