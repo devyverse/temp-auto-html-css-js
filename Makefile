@@ -1,48 +1,105 @@
 PACKAGE = package 
-VERSION = ` date " +%Y.%m%d% `
+VERSION = `date "+%Y.%m%d"`
 RELEASE_DIR = ..
-RELEASE_FILE = $(PACKAGE) - $(VERSION)
+RELEASE_FILE = $(PACKAGE)-$(VERSION)
 
-ifneq (,)
-This makefile requires GNU Make.
-endif
+BIN_DIR = bin
+OBJ_DIR = obj
 
-PROGRAM = main
-C_FILES := $(wildcard *.c)
-OBJS := $(patsubst %.c, %.o, $(C_FILES))
+PROGRAM = $(BIN_DIR)/main
+
+C_FILES := main.c $(wildcard src/*.c)
+OBJS := $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(C_FILES)))
+
 CC = gcc
-CFLAGS = -Wall -pedantic
-LDFLAGS =
+CFLAGS = -Wall -pedantic -Ilib
 LDLIBS = -lm
 
-SRC = src/generator.c
+# Silence total
+.SILENT:
 
-all: $(PROGRAM)
+# Colors
+GREEN=\033[1;32m
+BLUE=\033[1;34m
+YELLOW=\033[1;33m
+RED=\033[1;31m
+RESET=\033[0m
 
-$(PROGRAM): .depend $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(PROGRAM) $(LDLIBS)
+# Messages
+SUCCESS = $(GREEN)[SUCCESS] Build terminé$(RESET)
+ERROR = $(RED)[ERROR] Échec de la compilation$(RESET)
+DEBUG_MSG = $(YELLOW)[DEBUG MODE ACTIVÉ]$(RESET)
 
-depend: .depend
+# Logo DEVREAL animé
+define DEVREAL_FRAME_1
+$(BLUE)
+██████╗ 
+██╔════╝
+██║     
+██║     
+╚██████╗
+ ╚═════╝
+$(RESET)
+endef
 
-.depend: cmd = gcc -MM -MF depend $(var); cat depend >> .depend;
-.depend:
-	@echo "Generating dependencies..."
-	@$(foreach var, $(C_FILES), $(cmd))
-	@rm -f depend
+define DEVREAL_FRAME_2
+$(BLUE)
+██████╗ ███████╗
+██╔════╝ ██╔════╝
+██║  ███╗█████╗  
+██║   ██║██╔══╝  
+╚██████╔╝███████╗
+ ╚═════╝ ╚══════╝
+$(RESET)
+endef
 
--include .depend
+define DEVREAL_FRAME_3
+$(BLUE)
+██████╗ ███████╗██╗   ██╗██████╗ ███████╗ █████╗ ██╗     
+██╔════╝ ██╔════╝██║   ██║██╔══██╗██╔════╝██╔══██╗██║     
+██║  ███╗█████╗  ██║   ██║██████╔╝█████╗  ███████║██║     
+██║   ██║██╔══╝  ██║   ██║██╔══██╗██╔══╝  ██╔══██║██║     
+╚██████╔╝███████╗╚██████╔╝██║  ██║███████╗██║  ██║███████╗
+ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝
+$(RESET)
+endef
 
-%.o: %.c
+define	DEVREAL_ANIM
+	@echo "$$DEVREAL_FRAME_1"; sleep 0.1
+	@echo "$$DEVREAL_FRAME_2"; sleep 0.1
+	@echo "$$DEVREAL_FRAME_3"
+endef
+
+all:	$(PROGRAM)
+
+run:	$(PROGRAM)
+	$(DEVREAL_ANIM)
+	@echo "$(SUCCESS)"
+	./$(PROGRAM)
+
+debug:	CFLAGS += -g -DDEBUG
+debug:	run
+	@echo "$(DEBUG_MSG)"
+
+release:	CFLAGS += -O2 -DRELEASE
+release:	all
+	@echo "$(SUCCESS)"
+
+$(PROGRAM): $(OBJS)
+	mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) $(OBJS) -o $(PROGRAM) $(LDLIBS)
+
+$(OBJ_DIR)/%.o: %.c
+	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-%: %.o
-	$(CC) $(CFLAGS) -o $@ $<
-# Make a release
-dist:
-	tar -cf  $(RELEASE_DIR)/$(RELEASE_FILE) && \
-	gzip -9  $(RELEASE_DIR)/$(RELEASE_FILE).tar
-clean:
-	rm -f .depend $(OBJS)
+$(OBJ_DIR)/%.o:	src/%.c
+	mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-.PHONY:
-	clean depend
+clean:
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
+	@echo "$(RED)[CLEAN] Nettoyage terminé$(RESET)"
+
+.PHONY:		all run debug release clean
+

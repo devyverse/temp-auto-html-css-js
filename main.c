@@ -1,20 +1,14 @@
 /*
-@title :  Website Generator
-@brief :  Website Generator
-@author :devreal 
-@name file :  main.c
+//title :  Website Generator
+//brief :  Website Generator
+//author :devreal 
+//name file :  main.c
 */
-
 #include <stdio.h>
-#include <stdlib.h>
-#include "src/webg.c" 
+#include "src/webg.h" 
 
-int main(void){
-	fprintf(
-	system("./webg");
+int main(){
+	gwebsite();
 	printf("Website Generator: OK /n ");
-	
-	ghtml(); 
-
 	return 0;
 }
