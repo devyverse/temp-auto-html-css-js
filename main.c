@@ -5,7 +5,7 @@
 //name file :  main.c
 */
 #include <stdio.h>
-#include "src/webg.h" 
+#include "lib/webg.h" 
 
 int main(){
 	gwebsite();

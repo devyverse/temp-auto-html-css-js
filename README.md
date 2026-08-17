@@ -14,17 +14,20 @@ Auto Completion Template HTML CSS JS - Based website
 
 ```shell
 /temp-auto-html-css-js
-	|--/bin 
-	|--/src
-		|--webg.c
-	|--/lib 
-		|--html.h
-		|--css.h
-		|--js.h
-	|--main.c
-	|--main
-	|--Makefile
-	
+.
+├── lib
+│   ├── css.h
+│   ├── html.h
+│   ├── js.h
+│   └── webg.h
+├── LICENSE
+├── main.c
+├── Makefile
+├── README.md
+├── src
+│   ├── template.c
+│   └── webg.c
+└── tree.txt
 ```
 # PREREQUIRES
 
@@ -32,10 +35,12 @@ Auto Completion Template HTML CSS JS - Based website
 
 # INSTALLATION 
 
-1. ```shell git clone ```
-2.  In the terminal  ```shell make ```
-3. ```shell ./main ```
-4. Completed the files HTML/CSS/JS for website template
+1. ``` git clone https://github.com/devyverse/temp-auto-html-css-js.git  ``` 
+2. In the terminal  ```shell make ```
+3. ```cd bin/ ```
+4. ```./main ```
+5. ```cd website ```
+6. Your templates HTML/CSS/JS READY ! 
 
 ## CONTRIBUTING 
 
